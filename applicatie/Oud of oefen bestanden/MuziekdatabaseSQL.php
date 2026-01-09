@@ -5,17 +5,17 @@ require_once 'db_connectie.php';
 function genresAsSelect()
 {
     $db = maakVerbinding();
-    $sql = 'select *
-            from stuk
-            order by componistId';
+    $sql = 'select genrenaam
+            from genre
+            order by genrenaam';
 
     $data = $db->query($sql);
 
-    $html = '<select id="stuk" name="stuk">';
+    $html = '<select id="genre" name="genre">';
 
     foreach ($data as $rij) {
-        $componistid = $rij['componistid'];
-        $html .= "<option value=\"$componistid\">$componistid</option>";
+        $genrenaam = $rij['genrenaam'];
+        $html .= "<option value=\"$genrenaam\">$genrenaam</option>";
     }
 
     $html .= '</select>';
@@ -23,25 +23,27 @@ function genresAsSelect()
 }
 
 // ------- logica
-if (isset($_GET['stuk'])) {
-    $stuk = $_GET['stuk'];
+if (isset($_GET['genre'])) {
+    $genre = $_GET['genre'];
 } else {
-    $stuk = 'componistid';
+    $genre = 'pop';
 }
 
 // verbinding maken met db
 $db = maakVerbinding();
 
 // Query maken
-$sql = 'select *
-from stuk
-order by componistId';
+$sql = 'select stuknr, titel, genrenaam, n.omschrijving, c.naam
+        from stuk s
+        left outer join niveau n on s.niveaucode = n.niveaucode
+        inner join componist c on s.componistId = c.componistId
+        where genrenaam = :genre';
 
 // Gegevens ophalen
 $data = $db->prepare($sql);
 
 $data_array = [
-    ':stuk' => $stuk
+    ':genre' => $genre
 ];
 
 $data->execute($data_array);
@@ -51,15 +53,12 @@ $muziekstukken = '<table>';
 foreach ($data as $rij) {
     // Haal alle kolomen op
     $stuknr = $rij['stuknr'];
-    $stuknrOrigineel = $rij['stuknrOrigineel'];
-    $componistID = $componistID['$componistID'];
     $titel = $rij['titel'];
     $genrenaam = $rij['genrenaam'];
-    $speelduur = $rij['speelduur'];
-    $jaartal = $rij['jaartal'];
-    $niveaucode = $rij['niveaucode'];
+    $omschrijving = $rij['omschrijving'];
+    $naam = $rij['naam'];
 
-    $muziekstukken .= "<tr><td>$stuknr</td><td>$titel</td><td>$stuknrOrigineel</td><td>$genrenaam</td><td>$niveaucode</td><td>$speelduur</td><td>$jaartal</td></tr>";
+    $muziekstukken .= "<tr><td>$stuknr</td><td>$titel</td><td>$genrenaam</td><td>$omschrijving</td></tr>";
 }
 $muziekstukken .= '<table>';
 
