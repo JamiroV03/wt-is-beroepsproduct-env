@@ -3,6 +3,8 @@ require_once '../includes/db_connectie.php';
 
 $db = maakVerbinding();
 
+$ingelogd = isset($_SESSION['username']);
+
 $sql = "
     SELECT 
         p.name,
@@ -51,7 +53,13 @@ require_once '../includes/header.php';
     </table>
 
     <br>
-    <button type="submit">Toevoegen aan winkelmandje</button>
+    <button <?= !$ingelogd ? 'disabled' : '' ?>>
+    Toevoegen aan winkelmandje
+</button>
+<?php if (!$ingelogd): ?>
+    <p><em>Log in om producten te kunnen bestellen.</em></p>
+<?php endif; ?>
+
 </form>
 
 <?php
