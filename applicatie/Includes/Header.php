@@ -1,6 +1,9 @@
 <?php
 session_start();
+ if (isset($_SESSION['username'])):
 ?>
+    <li><a href="logout.php">Uitloggen</a></li>
+<?php endif; ?>
 
 <!DOCTYPE html>
 <html lang="nl">
