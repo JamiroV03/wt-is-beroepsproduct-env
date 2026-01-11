@@ -14,6 +14,15 @@ session_start();
 </head>
 <body>
 <header>
+    <div style="float: right; font-size: 0.9em;">
+    <?php if (isset($_SESSION['username'])): ?>
+        👤 Ingelogd als:
+        <strong><?= htmlspecialchars($_SESSION['username']) ?></strong>
+        (<?= htmlspecialchars($_SESSION['role']) ?>)
+    <?php else: ?>
+        Niet ingelogd
+    <?php endif; ?>
+</div>
     <nav>
         <a href="index.php">Home</a> |
         <a href="menu.php">Menu</a> |

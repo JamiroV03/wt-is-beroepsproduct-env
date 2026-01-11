@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['role']     = $user['role'];
 
             // Doorsturen op basis van rol
-            if ($user['role'] === 'personeel') {
+            if ($user['role'] === 'medewerker') {
                 header('Location: overzicht.php');
             } else {
                 header('Location: profiel.php');
