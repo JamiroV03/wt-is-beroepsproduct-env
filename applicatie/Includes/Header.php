@@ -44,7 +44,7 @@ session_start();
                 <li><a href="overzicht.php">Overzicht</a></li>
             <?php endif; ?>
 
-            <li><a href="logout.php">Uitloggen</a></li>
+            
 
         <?php else: ?>
             <li><a href="login.php">Inloggen</a></li>

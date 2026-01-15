@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fouten[] = 'Achternaam is verplicht.';
     }
 
-    // Wachtwoord eisen
     if (
         strlen($password) < 8 ||
         !preg_match('/[0-9]/', $password) ||
@@ -45,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fouten[] = 'Wachtwoord moet minimaal 8 tekens bevatten, met een cijfer en een speciaal teken.';
     }
 
-    // Als geen fouten → opslaan
     if (empty($fouten)) {
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -67,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $melding = 'Registratie gelukt! Je kunt nu inloggen.';
 
-            // Formulier leegmaken na succes
             $username = $first_name = $last_name = $address = '';
 
         } catch (PDOException $e) {

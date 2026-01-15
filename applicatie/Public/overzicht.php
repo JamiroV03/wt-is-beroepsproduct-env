@@ -10,9 +10,6 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'medewerker') {
 
 $db = maakVerbinding();
 
-/* -------------------------
-   Status aanpassen
--------------------------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['status'])) {
     $stmt = $db->prepare("
         UPDATE Pizza_Order
@@ -25,9 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['s
     ]);
 }
 
-/* -------------------------
-   Filtering
--------------------------- */
 $statusFilter = $_GET['status'] ?? 'all';
 
 $sql = "
@@ -48,7 +42,6 @@ $stmt = $db->prepare($sql);
 $stmt->execute($params);
 $bestellingen = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Status labels
 $statusLabels = [
     0 => 'Nieuw',
     1 => 'In de oven',

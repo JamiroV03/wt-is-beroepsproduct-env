@@ -2,7 +2,6 @@
 require_once '../includes/db_connectie.php';
 require_once '../includes/header.php';
 
-// Alleen ingelogde klanten
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'klant') {
     header('Location: login.php');
     exit;
@@ -11,7 +10,6 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'klant') {
 $db = maakVerbinding();
 $username = $_SESSION['username'];
 
-// Bestellingen ophalen van deze klant
 $stmt = $db->prepare("
     SELECT order_id, datetime, status, address
     FROM Pizza_Order
@@ -21,7 +19,6 @@ $stmt = $db->prepare("
 $stmt->execute([$username]);
 $bestellingen = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Status vertaling
 function statusTekst(int $status): string {
     return match ($status) {
         0 => 'Nieuw',

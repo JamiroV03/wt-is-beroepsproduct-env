@@ -4,11 +4,9 @@ require_once '../includes/header.php';
 
 $db = maakVerbinding();
 
-// Bepaal loginstatus
 $isIngelogd = isset($_SESSION['username']);
 $isKlant = $isIngelogd && $_SESSION['role'] === 'klant';
 
-// Producten ophalen
 $stmt = $db->query("SELECT name, price FROM Product ORDER BY name");
 $producten = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

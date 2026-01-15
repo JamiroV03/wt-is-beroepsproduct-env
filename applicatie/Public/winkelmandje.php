@@ -8,9 +8,17 @@ if (isset($_POST['aantal']) && is_array($_POST['aantal'])) {
     foreach ($_POST['aantal'] as $product => $aantal) {
         $aantal = (int)$aantal;
 
-        if ($aantal > 0) {
-            $_SESSION['winkelmandje'][$product] = $aantal;
-        }
+    if ($aantal < 0) {
+        $aantal = 0;
+    }
+
+    if ($aantal > 5) {
+        $aantal = 5;
+    }
+
+    if ($aantal > 0) {
+        $_SESSION['winkelmandje'][$product] = $aantal;
+    }
     }
 }
 

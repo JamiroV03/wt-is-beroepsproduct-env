@@ -26,13 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($user && password_verify($password, $user['password'])) {
 
-            // Login succesvol → sessie vullen
             $_SESSION['ingelogd'] = true;
             $_SESSION['username'] = $user['username'];
             $_SESSION['name']     = $user['first_name'];
             $_SESSION['role']     = $user['role'];
 
-            // Doorsturen op basis van rol
             if ($user['role'] === 'medewerker') {
                 header('Location: overzicht.php');
             } else {
